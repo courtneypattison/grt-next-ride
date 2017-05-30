@@ -72,6 +72,7 @@ def display_next_ride_times(next_ride_times):
         print next_ride_time, "in", mins_to_next_ride, "minutes"
     else:
         print "Invalid STOP_ID"
+        return
 
     for next_ride_time in next_ride_times[1:]:
         print format_time(next_ride_time)
