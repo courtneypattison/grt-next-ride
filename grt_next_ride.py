@@ -65,9 +65,8 @@ def display_next_ride_times(next_ride_times):
     """
     next_ride_times.sort()
 
-    current_time = time.time()
     if next_ride_times:
-        mins_to_next_ride = int(next_ride_times[0] - current_time) / 60
+        mins_to_next_ride = int(next_ride_times[0] - time.time()) / 60
         next_ride_time = format_time(next_ride_times[0])
         print next_ride_time, "in", mins_to_next_ride, "minutes"
     else:
