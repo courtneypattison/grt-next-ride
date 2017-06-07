@@ -54,6 +54,9 @@ def get_next_ride_times(stop_id):
     return next_ride_times
 
 
+def get_mins_to_next_ride(next_ride_time):
+    return int(next_ride_time - time.time()) / 60
+
 def format_time(secs):
     """
     Format time in seconds to 12 hour clock and minutes
@@ -68,14 +71,19 @@ def display_next_ride_times(next_ride_times):
     """
 
     if next_ride_times:
+        mins_to_next_ride_printed = False
+
         next_ride_times.sort()
 
-        mins_to_next_ride = int(next_ride_times[0] - time.time()) / 60
-        next_ride_time = format_time(next_ride_times[0])
-        print next_ride_time, "in", mins_to_next_ride, "minutes"
-
-        for next_ride_time in next_ride_times[1:]:
-            print format_time(next_ride_time)
+        for next_ride_time in next_ride_times:
+            if mins_to_next_ride_printed:
+                print format_time(next_ride_time)
+            else:
+                # Sometimes the feed has old data
+                if next_ride_time > time.time():
+                    print format_time(next_ride_time), "in", \
+                          get_mins_to_next_ride(next_ride_time), "minutes"
+                    mins_to_next_ride_printed = True
     else:
         print "There are no next ride times."
 
